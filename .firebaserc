@@ -1,5 +1,8 @@
 {
   "projects": {
-    "default": "black-beach-438509"
-  }
+    "default": "black-beach-438509",
+    "prod": "black-beach-438509"
+  },
+  "targets": {},
+  "etags": {}
 }
