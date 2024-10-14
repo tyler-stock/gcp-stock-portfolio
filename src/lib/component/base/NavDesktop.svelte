@@ -1,9 +1,24 @@
 <script lang="ts">
-    import { isDark } from "$lib/store/theme"
     import { writable } from 'svelte/store'
+    import { isDark } from "$lib/store/theme"
+    import { user } from '$lib/store/user'
+    import { logoutUser } from '$lib/auth'
+    import { clickOutside } from '$lib/util/clickOutside'
 
-    function toggleTheme() {
-        isDark.update(n => !n)
+    let currentUser = ''
+    $: if ($user) {
+        currentUser = $user.displayName || $user.email || 'User'
+    }
+
+    let showLogout = false
+
+    const handleLogout = () => {
+    logoutUser()
+    showLogout = false
+    }
+
+    const toggleDarkMode = () => {
+        isDark.set(!$isDark)
     }
 
     const isPinned = writable(false)
@@ -13,7 +28,7 @@
     }
 
     const buttons = [
-        { href: "/", icon: "home", label: "Home" },
+        { href: "/app", icon: "home", label: "Home" },
         // { href: "/app/component", icon: "extension", label: "Components" },
         // { href: "/app/chat", icon: "robot_2", label: "AI Chat" }
     ]
@@ -55,13 +70,22 @@
         </div>
     </div>
     <div class="w-full flex justify-between pb-6">
-        <button class="w-[80%] flex items-center justify-start p-2 rounded-lg hover:bg-white dark:hover:bg-[#212121] text-primary-800 dark:text-white/80 duration-200">
-            <i class="material-symbols-rounded text-[24px]">person</i>
-            <p class="text-sm text-left {($isPinned ? 'overflow-visible pl-2' : 'w-0 overflow-hidden group-hover:w-full group-hover:pr-3 group-hover:pl-2 group-hover:truncate group-hover:overflow-visible')}">Tyler Stock</p>
-        </button>
-        <div>
+        <div class="relative w-[80%]" use:clickOutside={() => showLogout = false}>
+            {#if showLogout}
+                <button on:click={handleLogout} class="{$isPinned ? '' : 'hidden group-hover:block'} absolute bottom-12 mt-2 left-0 w-[80%] p-2 py-[6px] rounded-lg bg-red-500 hover:bg-red-600 text-white duration-200">
+                    Logout
+                </button>
+            {/if}
+            <button on:click={() => showLogout = !showLogout} class="w-full flex items-center justify-start p-2 rounded-lg hover:bg-white dark:hover:bg-[#212121] text-primary-800 dark:text-white/80 duration-200">
+                <i class="material-symbols-rounded text-[24px]">person</i>
+                <p class="text-sm text-left {($isPinned ? 'overflow-visible pl-2' : 'w-0 overflow-hidden group-hover:w-full group-hover:pr-3 group-hover:pl-2 group-hover:truncate group-hover:overflow-visible')}">
+                    {currentUser}
+                </p>
+            </button>
+        </div>
+        <div class="W-[20%]">
             <div class="{$isPinned ? '' : 'hidden group-hover:block'}">
-                <button on:click={toggleTheme} class="h-full flex p-2 rounded-lg hover:bg-white dark:hover:bg-[#212121] text-primary-800 dark:text-white/80 duration-200">
+                <button on:click={toggleDarkMode} class="h-full flex p-2 rounded-lg hover:bg-white dark:hover:bg-[#212121] text-primary-800 dark:text-white/80 duration-200">
                     <i class="material-symbols-rounded text-[24px]">{$isDark ? 'dark_mode' : 'light_mode'}</i>
                 </button>
             </div>
