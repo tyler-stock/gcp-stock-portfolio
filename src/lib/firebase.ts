@@ -15,14 +15,18 @@ const firebaseConfig = {
 
 const app = initializeApp(firebaseConfig)
 
-// Only initialize Analytics if running in the browser
 let analytics
-if (typeof window !== 'undefined') {
-  const { getAnalytics, isSupported } = await import('firebase/analytics')
-  if (await isSupported()) {
-    analytics = getAnalytics(app)
+
+async function initializeAnalytics() {
+  if (typeof window !== 'undefined') {
+    const { getAnalytics, isSupported } = await import('firebase/analytics')
+    if (await isSupported()) {
+      analytics = getAnalytics(app)
+    }
   }
 }
+
+initializeAnalytics()
 
 export const auth = getAuth(app)
 // export const database = getDatabase(app)
