@@ -3,5 +3,9 @@
     "default": "black-beach-438509"
   },
   "targets": {},
-  "etags": {}
+  "etags": {
+    "black-beach-438509": {
+      "extensionInstances": {}
+    }
+  }
 }

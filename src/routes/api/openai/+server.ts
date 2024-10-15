@@ -7,13 +7,13 @@ const client = new SecretManagerServiceClient();
 async function getSecretValue() {
     try {
         const [version] = await client.accessSecretVersion({
-            name: `projects/935976699376/secrets/OPENAI-API-KEY/versions/1`,
+            name: `projects/935976699376/secrets/VITE_OPENAI_API_KEY/versions/1`,
         });
         const secretPayload = version.payload?.data?.toString();
-        if (!secretPayload) throw new Error(`Secret OPENAI-API-KEY has no payload`);
+        if (!secretPayload) throw new Error(`Secret VITE_OPENAI_API_KEY has no payload`);
         return secretPayload;
     } catch (error) {
-        console.error(`Error fetching secret OPENAI-API-KEY:`, error);
+        console.error(`Error fetching secret VITE_OPENAI_API_KEY:`, error);
         throw new Error('Failed to retrieve API key from Secret Manager');
     }
 }
@@ -30,7 +30,7 @@ export async function POST({ request }: RequestEvent) {
 
         const stream = await openai.chat.completions.create({
             messages: [
-                { role: 'system', content: 'Always respond in Markdown format. Avoid using triple backticks for code blocks. Use more business type emojis sparingly.' },
+                { role: 'system', content: 'Always respond in Markdown format. Use more business type emojis sparingly.' },
                 ...messages
             ],
             model: 'gpt-4o',
