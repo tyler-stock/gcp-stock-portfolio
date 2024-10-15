@@ -56,6 +56,6 @@ export async function POST({ request }: RequestEvent) {
         })
     } catch (error) {
         console.error('Error communicating with OpenAI:', error)
-        return json({ error: 'Failed to communicate with OpenAI' }, { status: 500 })
+        return json({ error: 'Failed to communicate with OpenAI in server.ts' }, { status: 500 })
     }
 }

@@ -15,7 +15,7 @@ export async function sendMessageToOpenAI(
     })
 
     if (!response.ok) {
-        throw new Error('Failed to communicate with OpenAI')
+        throw new Error('Failed to communicate with OpenAI in openai.ts')
     }
 
     const reader = response.body?.getReader()
