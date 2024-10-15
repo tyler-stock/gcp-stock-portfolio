@@ -15,6 +15,12 @@
         "source": "**",
         "function": "ssrblackbeach438509"
       }
+    ],
+    "secrets": [
+      {
+        "id": "OPENAI-API-KEY",
+        "version": "1"
+      }
     ]
   }
 }

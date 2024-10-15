@@ -1,5 +1,7 @@
 {
   "projects": {
     "default": "black-beach-438509"
-  }
+  },
+  "targets": {},
+  "etags": {}
 }

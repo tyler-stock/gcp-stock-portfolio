@@ -4,23 +4,23 @@ import { SecretManagerServiceClient } from '@google-cloud/secret-manager'
 
 const client = new SecretManagerServiceClient();
 
-async function getSecretValue(secretName: string) {
+async function getSecretValue() {
     try {
         const [version] = await client.accessSecretVersion({
-            name: `projects/935976699376/secrets/${secretName}/versions/1`,
+            name: `projects/935976699376/secrets/OPENAI-API-KEY/versions/1`,
         });
         const secretPayload = version.payload?.data?.toString();
-        if (!secretPayload) throw new Error(`Secret ${secretName} has no payload`);
+        if (!secretPayload) throw new Error(`Secret OPENAI-API-KEY has no payload`);
         return secretPayload;
     } catch (error) {
-        console.error(`Error fetching secret ${secretName}:`, error);
+        console.error(`Error fetching secret OPENAI-API-KEY:`, error);
         throw new Error('Failed to retrieve API key from Secret Manager');
     }
 }
 
 export async function POST({ request }: RequestEvent) {
     try {
-        const apiKey = await getSecretValue('OPENAI-API-KEY')
+        const apiKey = await getSecretValue()
 
         const openai = new OpenAI({
             apiKey: apiKey
