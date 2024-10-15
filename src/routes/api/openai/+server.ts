@@ -54,8 +54,17 @@ export async function POST({ request }: RequestEvent) {
                 'Content-Type': 'text/plain',
             },
         })
-    } catch (error) {
-        console.error('Error communicating with OpenAI:', error)
-        return json({ error: 'Failed to communicate with OpenAI in server.ts' }, { status: 500 })
+    } catch (error: any) {
+        console.error('Error communicating with OpenAI:', error.message, error.stack);
+
+        let errorMessage = 'Failed to communicate with OpenAI';
+
+        if (error.message.includes('Failed to retrieve API key')) {
+            errorMessage = 'Server configuration error. Please contact support.';
+        } else if (error.message.includes('Invalid API key')) {
+            errorMessage = 'Invalid API key. Please verify your API configuration.';
+        }
+
+        return json({ error: errorMessage }, { status: 500 });
     }
 }
