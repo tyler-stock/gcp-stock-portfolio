@@ -7,7 +7,7 @@ const client = new SecretManagerServiceClient();
 async function getSecretValue(secretName: string) {
     try {
         const [version] = await client.accessSecretVersion({
-            name: `projects/935976699376/secrets/${secretName}/versions/latest`,
+            name: `projects/935976699376/secrets/${secretName}/versions/1`,
         });
         const secretPayload = version.payload?.data?.toString();
         if (!secretPayload) throw new Error(`Secret ${secretName} has no payload`);
