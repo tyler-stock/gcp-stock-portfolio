@@ -30,7 +30,7 @@
     const buttons = [
         { href: "/app", icon: "home", label: "Home" },
         // { href: "/app/component", icon: "extension", label: "Components" },
-        // { href: "/app/chat", icon: "robot_2", label: "AI Chat" }
+        { href: "/app/chat", icon: "robot_2", label: "AI Chat" }
     ]
     
 </script>

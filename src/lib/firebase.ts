@@ -14,20 +14,6 @@ const firebaseConfig = {
 }
 
 const app = initializeApp(firebaseConfig)
-
-let analytics
-
-async function initializeAnalytics() {
-  if (typeof window !== 'undefined') {
-    const { getAnalytics, isSupported } = await import('firebase/analytics')
-    if (await isSupported()) {
-      analytics = getAnalytics(app)
-    }
-  }
-}
-
-initializeAnalytics()
-
 export const auth = getAuth(app)
 // export const database = getDatabase(app)
 // export const storage = getStorage(app)

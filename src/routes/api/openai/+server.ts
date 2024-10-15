@@ -7,8 +7,8 @@ const client = new SecretManagerServiceClient();
 async function getSecretValue(secretName: string) {
     try {
         const [version] = await client.accessSecretVersion({
-            name: `projects/437428581435/secrets/${secretName}/versions/latest`, // This project number matches the one from the image
-        });
+            name: `projects/935976699376/secrets/${secretName}/versions/latest`,
+        });        
         const secretPayload = version.payload?.data?.toString();
         if (!secretPayload) throw new Error(`Secret ${secretName} has no payload`);
         return secretPayload;
@@ -20,7 +20,7 @@ async function getSecretValue(secretName: string) {
 
 export async function POST({ request }: RequestEvent) {
     try {
-        const apiKey = await getSecretValue('openai-api-key')
+        const apiKey = await getSecretValue('OPENAI-API-KEY')
 
         const openai = new OpenAI({
             apiKey: apiKey
