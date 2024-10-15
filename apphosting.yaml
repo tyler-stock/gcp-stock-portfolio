@@ -22,4 +22,4 @@ runConfig:
 
 secrets:
   - id: OPENAI_API_KEY
-    version: latest
+    version: 1
