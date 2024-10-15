@@ -8,7 +8,7 @@ async function getSecretValue(secretName: string) {
     try {
         const [version] = await client.accessSecretVersion({
             name: `projects/935976699376/secrets/${secretName}/versions/latest`,
-        });        
+        });
         const secretPayload = version.payload?.data?.toString();
         if (!secretPayload) throw new Error(`Secret ${secretName} has no payload`);
         return secretPayload;
